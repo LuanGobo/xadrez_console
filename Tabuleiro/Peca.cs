@@ -1,7 +1,7 @@
 ﻿using System;
-using Tabuleiro;
+using tabuleiro;
 
-namespace xadrez_console.Tabuleiro
+namespace tabuleiro
 {
     internal class Peca
     {
@@ -15,7 +15,7 @@ namespace xadrez_console.Tabuleiro
             this.posicao = posicao;
             this.cor = cor;
             this.tab = tab;
-            this.qteMovimentos= 0;WW
+            this.qteMovimentos= 0;
         }
     }
 }
