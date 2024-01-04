@@ -31,8 +31,18 @@ namespace tabuleiro
 
         public void colocarpeca(Peca p, Posicao pos)
         {
+            if (existePeca(pos))
+            {
+                throw new TabuleiroException("Já existe uma peça nessa posição!");
+            }
             pecas[pos.linha, pos.coluna] = p;
             p.posicao = pos;
+        }
+
+        public bool existePeca(Posicao pos) 
+        {
+            validarPosicao(pos);
+            return peca(pos) != null;
         }
 
         public bool posicaoValida(Posicao pos)
@@ -46,7 +56,10 @@ namespace tabuleiro
 
         public void validarPosicao(Posicao pos)
         {
-
+            if (!posicaoValida(pos))
+            {
+                throw new TabuleiroException("Posicao Invalida");
+            }
         }
     }
 }
