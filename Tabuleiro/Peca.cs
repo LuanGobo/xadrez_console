@@ -40,6 +40,11 @@ namespace tabuleiro
         {
             this.qteMovimentos++;
         }
+
+        public void decrementarQteMoviemntos()
+        {
+            this.qteMovimentos--;
+        }
     }
 }
  
