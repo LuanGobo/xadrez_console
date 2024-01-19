@@ -1,12 +1,17 @@
 ﻿using System;
 using tabuleiro;
 
-namespace xadrez_console.xadrez
+namespace xadrez
 {
-    internal class Torre : Peca
+    internal class Bispo : Peca 
     {
-        public Torre(Tabuleiro tab, Cor cor) : base(cor, tab)
+        public Bispo(Tabuleiro tab,Cor cor) : base(cor, tab) 
+        { 
+        }
+
+        public override string ToString()
         {
+            return "B";
         }
 
         public bool podeMover(Posicao pos)
@@ -15,20 +20,14 @@ namespace xadrez_console.xadrez
             return p == null || p.cor != cor;
         }
 
-
-        public override string ToString()
-        {
-            return "T";
-        }
-
         public override bool[,] movimentosPossiveis()
         {
             bool[,] mat = new bool[tab.linhas, tab.colunas];
 
             Posicao pos = new Posicao(0, 0);
 
-            //Coluna Acima
-            pos.definirValores(posicao.linha - 1, posicao.coluna);
+            //NO
+            pos.definirValores(posicao.linha - 1, posicao.coluna-1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -36,11 +35,11 @@ namespace xadrez_console.xadrez
                 {
                     break;
                 }
-                pos.linha = pos.linha - 1;
+                pos.definirValores(pos.linha - 1, pos.coluna - 1);
             }
 
-            //Coluna abaixo
-            pos.definirValores(posicao.linha + 1, posicao.coluna);
+            //NE
+            pos.definirValores(posicao.linha - 1, posicao.coluna + 1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -48,11 +47,11 @@ namespace xadrez_console.xadrez
                 {
                     break;
                 }
-                pos.linha = pos.linha + 1;
+                pos.definirValores(pos.linha - 1, pos.coluna + 1);
             }
 
-            //Linha direita
-            pos.definirValores(posicao.linha, posicao.coluna + 1);
+            //SE
+            pos.definirValores(posicao.linha + 1, posicao.coluna + 1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -60,11 +59,11 @@ namespace xadrez_console.xadrez
                 {
                     break;
                 }
-                pos.coluna = pos.coluna + 1;
+                pos.definirValores(pos.linha + 1, pos.coluna + 1);
             }
 
-            //Linha esquerda
-            pos.definirValores(posicao.linha, posicao.coluna - 1);
+            //SO
+            pos.definirValores(posicao.linha + 1, posicao.coluna - 1);
             while (tab.posicaoValida(pos) && podeMover(pos))
             {
                 mat[pos.linha, pos.coluna] = true;
@@ -72,10 +71,9 @@ namespace xadrez_console.xadrez
                 {
                     break;
                 }
-                pos.coluna = pos.coluna - 1;
+                pos.definirValores(pos.linha + 1, pos.coluna - 1);
             }
-
             return mat;
         }
     }
-}
+}   
