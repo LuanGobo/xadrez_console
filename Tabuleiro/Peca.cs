@@ -34,6 +34,11 @@ namespace tabuleiro
             return false;
         }
 
+        public bool movimentoPossivel(Posicao pos)
+        {
+            return movimentosPossiveis()[pos.linha, pos.coluna];
+        }
+
         public abstract bool[,] movimentosPossiveis();
            
         public void incrementarQteMoviemntos()

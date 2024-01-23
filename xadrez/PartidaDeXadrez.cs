@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using tabuleiro;
+using xadrez_console.xadrez;
 
 namespace xadrez
 {
@@ -42,8 +43,15 @@ namespace xadrez
             }
         }
 
+        public void validarPosicaoDeDestino(Posicao origem, Posicao destino)
+        {
+            if (!tab.peca(origem).movimentoPossivel(destino))
+            {
+                throw new TabuleiroException("Posicao de destino inválida!");
+            }
+        }
 
-        private void mudaJogador()
+            private void mudaJogador()
         {
             if (jogadorAtual == Cor.Branca)
             {
@@ -194,6 +202,30 @@ namespace xadrez
                 capturadas.Add(pecaCapturada);
             }
 
+            //#jogada especial rogue pequeno
+            if(p is Rei  && destino.coluna == origem.coluna + 2)
+            {
+                Posicao origemTorre = new Posicao(origem.linha,origem.coluna+3);
+                Posicao destinoTorre = new Posicao(origem.linha, origem.coluna + 1);
+
+                Peca T = tab.retirarPeca(origemTorre);
+                T.incrementarQteMoviemntos();
+                tab.colocarpeca(T, destinoTorre);
+
+            }
+
+            //#jogada especial rogue grande
+            if (p is Rei && destino.coluna == origem.coluna - 2)
+            {
+                Posicao origemTorre = new Posicao(origem.linha, origem.coluna - 4);
+                Posicao destinoTorre = new Posicao(origem.linha, origem.coluna - 1);
+
+                Peca T = tab.retirarPeca(origemTorre);
+                T.incrementarQteMoviemntos();
+                tab.colocarpeca(T, destinoTorre);
+
+            }
+
             return pecaCapturada;
         }
 
@@ -206,7 +238,31 @@ namespace xadrez
                 tab.colocarpeca(pecaCapturada,destino);
                 capturadas.Remove(pecaCapturada);
             }
-            
+
+            //#jogada especial rogue pequeno
+            if (p is Rei && destino.coluna == origem.coluna + 2)
+            {
+                Posicao origemTorre = new Posicao(origem.linha, origem.coluna + 3);
+                Posicao destinoTorre = new Posicao(origem.linha, origem.coluna + 1);
+
+                Peca T = tab.retirarPeca(destinoTorre);
+                T.decrementarQteMoviemntos();
+                tab.colocarpeca(T, origemTorre);
+
+            }
+
+            //#jogada especial rogue grande
+            if (p is Rei && destino.coluna == origem.coluna - 2)
+            {
+                Posicao origemTorre = new Posicao(origem.linha, origem.coluna - 4);
+                Posicao destinoTorre = new Posicao(origem.linha, origem.coluna - 1);
+
+                Peca T = tab.retirarPeca(destinoTorre);
+                T.incrementarQteMoviemntos();
+                tab.colocarpeca(T, origemTorre);
+
+            }
+
             tab.colocarpeca(p, origem);
         }
 
@@ -218,7 +274,39 @@ namespace xadrez
 
         private void colocarPecas()
         {
-            colocarNovaPeca('c', 1, new Torre(tab, Cor.Branca));
+            colocarNovaPeca('a', 1, new Torre(tab, Cor.Branca));
+            colocarNovaPeca('b', 1, new Cavalo(tab, Cor.Branca));
+            colocarNovaPeca('c', 1, new Bispo(tab, Cor.Branca));
+            colocarNovaPeca('d', 1, new Dama(tab, Cor.Branca));
+            colocarNovaPeca('e', 1, new Rei(tab, Cor.Branca,this));
+            colocarNovaPeca('f', 1, new Bispo(tab, Cor.Branca));
+            colocarNovaPeca('g', 1, new Cavalo(tab, Cor.Branca));
+            colocarNovaPeca('h', 1, new Torre(tab, Cor.Branca));
+            colocarNovaPeca('b', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeca('a', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeca('c', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeca('d', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeca('e', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeca('f', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeca('g', 2, new Peao(tab, Cor.Branca));
+            colocarNovaPeca('h', 2, new Peao(tab, Cor.Branca));
+
+            colocarNovaPeca('a', 8, new Torre(tab, Cor.Preta));
+            colocarNovaPeca('b', 8, new Cavalo(tab, Cor.Preta));
+            colocarNovaPeca('c', 8, new Bispo(tab, Cor.Preta));
+            colocarNovaPeca('d', 8, new Dama(tab, Cor.Preta));
+            colocarNovaPeca('e', 8, new Rei(tab, Cor.Preta, this));
+            colocarNovaPeca('f', 8, new Bispo(tab, Cor.Preta));
+            colocarNovaPeca('g', 8, new Cavalo(tab, Cor.Preta));
+            colocarNovaPeca('h', 8, new Torre(tab, Cor.Preta));
+            colocarNovaPeca('b', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeca('a', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeca('c', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeca('d', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeca('e', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeca('f', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeca('g', 7, new Peao(tab, Cor.Preta));
+            colocarNovaPeca('h', 7, new Peao(tab, Cor.Preta));
 
         }
     }
